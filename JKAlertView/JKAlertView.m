@@ -8,6 +8,12 @@
 
 #import "JKAlertView.h"
 
+
+#define FONT_SIZE_TITLE 18.f
+#define FONT_SIZE_DETAIL 14.f
+#define FONT_SIZE_LINK_BUTTON 16.f
+#define FONT_SIZE_FOOTER 11.f
+
 @interface JKAlertView()
 
 @property(strong, nonatomic) UIWindow *window;
@@ -68,41 +74,44 @@
         
         // Configure the title label
         _titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(0,_imageView.frame.size.height + 10, _contentView.frame.size.width, 20)];
-        _titleLabel.font = [UIFont fontWithName:fontName size:16.f];
+        _titleLabel.font = [UIFont fontWithName:fontName size:FONT_SIZE_TITLE];
         _titleLabel.textAlignment = NSTextAlignmentCenter;
         _titleLabel.text = self.titleText;
         [_contentView addSubview:_titleLabel];
         
         // Configure the detail label
         _detailLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, _titleLabel.frame.origin.y + 35, _contentView.frame.size.width - 20, 60)];
-        _detailLabel.font = [UIFont fontWithName:fontName size:12.f];
+        _detailLabel.font = [UIFont fontWithName:fontName size:FONT_SIZE_DETAIL];
         _detailLabel.numberOfLines = 0;
         _detailLabel.contentScaleFactor = 0.5;
-        _detailLabel.lineBreakMode = NSLineBreakByWordWrapping;
+        _detailLabel.lineBreakMode = NSLineBreakByClipping;
         _detailLabel.textAlignment = NSTextAlignmentCenter;
         _detailLabel.text = self.detailText;
-        [_detailLabel sizeToFit];
         [_contentView addSubview:_detailLabel];
-        
-        // Configure the link button
-        _linkButton = [[UIButton alloc] initWithFrame:CGRectMake(0,_detailLabel.frame.origin.y + _detailLabel.frame.size.height + 30, _contentView.frame.size.width, 30)];
-        [_linkButton setTitle:self.linkText forState:UIControlStateNormal];
-        _linkButton.titleLabel.font = [UIFont fontWithName:fontName size:14.f];
-        [_linkButton setTitleColor:[UIColor colorWithRed:22.f/255.f green:134.f/255.f blue:255.f/255.f alpha:1.f] forState:UIControlStateNormal];
-        [_linkButton addTarget:self action:@selector(actionLink:) forControlEvents:UIControlEventTouchUpInside];
-        [_contentView addSubview:_linkButton];
         
         // Configure the footer label
         _footerLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, _contentView.frame.size.height - 30, _contentView.frame.size.width, 20)];
+        _footerLabel.font = [UIFont fontWithName:fontName size:FONT_SIZE_FOOTER];
+        _footerLabel.hidden = YES;
         _footerLabel.textAlignment = NSTextAlignmentCenter;
         _footerLabel.text = self.footerText;
-        _footerLabel.font = [UIFont fontWithName:fontName size:9.f];
         [_contentView addSubview:_footerLabel];
         
         // Configure the bottom line division
         _bottomLine = [[UIView alloc] initWithFrame:CGRectMake(0, _footerLabel.frame.origin.y - (_footerLabel.frame.size.height - 10) , _contentView.frame.size.width, 1)];
         _bottomLine.backgroundColor = [UIColor lightGrayColor];
+        _bottomLine.hidden = YES;
         [_contentView addSubview:_bottomLine];
+        
+        // Configure the link button
+        float yLinkButtonPosition = _bottomLine.frame.origin.y - _detailLabel.frame.origin.y + _detailLabel.frame.size.height;
+        _linkButton = [[UIButton alloc] initWithFrame:CGRectMake(0,yLinkButtonPosition, _contentView.frame.size.width, 30)];
+        _linkButton.titleLabel.font = [UIFont fontWithName:fontName size:FONT_SIZE_LINK_BUTTON];
+        _linkButton.hidden = YES;
+        [_linkButton setTitle:self.linkText forState:UIControlStateNormal];
+        [_linkButton setTitleColor:[UIColor colorWithRed:22.f/255.f green:134.f/255.f blue:255.f/255.f alpha:1.f] forState:UIControlStateNormal];
+        [_linkButton addTarget:self action:@selector(actionLink:) forControlEvents:UIControlEventTouchUpInside];
+        [_contentView addSubview:_linkButton];
         
     }
     return self;
@@ -111,10 +120,10 @@
 
 -(void)actionLink:(UIButton*) sender
 {
-//    UIWebView *webView = [[UIWebView alloc] initWithFrame:self.frame];
-//    NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:self.url]];
-//    [webView loadRequest:request];
-//    [self addSubview:webView];
+    //    UIWebView *webView = [[UIWebView alloc] initWithFrame:self.frame];
+    //    NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:self.url]];
+    //    [webView loadRequest:request];
+    //    [self addSubview:webView];
     
     [[UIApplication sharedApplication] openURL:[NSURL URLWithString:self.url]];
 }
@@ -186,7 +195,6 @@
 -(void)show
 {
     _contentView.transform = CGAffineTransformScale(CGAffineTransformIdentity, 0, 0);
-    
     self.alpha = 0.f;
     [_window.rootViewController.view addSubview:self];
     
@@ -234,6 +242,9 @@
     _detailLabel.text = _detailText;
     [_detailLabel sizeToFit];
     _detailLabel.frame = CGRectMake(_contentView.bounds.size.width/2 - _detailLabel.frame.size.width/2, _detailLabel.frame.origin.y, _detailLabel.frame.size.width, _detailLabel.frame.size.height);
+    
+    float yLinkButtonPosition = (_bottomLine.frame.origin.y - (_detailLabel.frame.origin.y + _detailLabel.frame.size.height)) / 2 + (_detailLabel.frame.origin.y + _detailLabel.frame.size.height) -(_linkButton.frame.size.height / 2);
+    _linkButton.frame = CGRectMake(_linkButton.frame.origin.x,yLinkButtonPosition, _contentView.frame.size.width, _linkButton.frame.size.height);
 }
 
 -(void)setDetailTextColor:(UIColor *)detailTextColor
@@ -245,6 +256,7 @@
 -(void)setLinkText:(NSString *)linkText
 {
     _linkText = linkText;
+    _linkButton.hidden = (linkText && linkText.length > 0)? NO : YES;
     [_linkButton setTitle:_linkText forState:UIControlStateNormal];
 }
 
@@ -257,6 +269,9 @@
 -(void)setFooterText:(NSString *)footerText
 {
     _footerText = footerText;
+    BOOL hidden = (footerText && footerText.length > 0) ? NO : YES;
+    _footerLabel.hidden = hidden;
+    _bottomLine.hidden = hidden;
     _footerLabel.text = _footerText;
 }
 
