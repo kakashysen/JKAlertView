@@ -37,12 +37,6 @@
             _window = [[UIApplication sharedApplication].windows objectAtIndex:0];
         }
         
-        // Default Values
-        self.linkText = @"Duis";
-        self.titleText = @"Lorem ipsum";
-        self.detailText = @"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.";
-        self.footerText = @"Duis aute irure dolor in reprehenderit ";
-        
         //Configure main view
         self.frame = _window.frame;
         self.backgroundColor = [UIColor colorWithRed:0.f green:0.f blue:0.f alpha:0.8];
@@ -239,6 +233,7 @@
     _detailText = detailText;
     _detailLabel.text = _detailText;
     [_detailLabel sizeToFit];
+    _detailLabel.frame = CGRectMake(_contentView.bounds.size.width/2 - _detailLabel.frame.size.width/2, _detailLabel.frame.origin.y, _detailLabel.frame.size.width, _detailLabel.frame.size.height);
 }
 
 -(void)setDetailTextColor:(UIColor *)detailTextColor

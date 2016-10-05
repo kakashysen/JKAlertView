@@ -31,8 +31,8 @@
 		E4742F1B1DA4536E00A02131 /* JKAlertView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JKAlertView.h; path = JKAlertView/JKAlertView.h; sourceTree = "<group>"; };
 		E4742F1C1DA4536E00A02131 /* JKAlertView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = JKAlertView.m; path = JKAlertView/JKAlertView.m; sourceTree = "<group>"; };
 		E4742F1E1DA469F500A02131 /* Media.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Media.xcassets; path = JKAlertViewExample/Media.xcassets; sourceTree = SOURCE_ROOT; };
-		E4742F201DA46A9700A02131 /* bg_img.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = bg_img.jpg; sourceTree = "<group>"; };
-		E4742F221DA46AA500A02131 /* dbz.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = dbz.jpg; sourceTree = "<group>"; };
+		E4742F201DA46A9700A02131 /* bg_img.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = bg_img.jpg; path = ../JKAlertViewExample/bg_img.jpg; sourceTree = "<group>"; };
+		E4742F221DA46AA500A02131 /* dbz.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = dbz.jpg; path = ../JKAlertViewExample/dbz.jpg; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
