@@ -13,7 +13,7 @@
 #define FONT_SIZE_LINK_BUTTON 16.f
 #define FONT_SIZE_FOOTER 11.f
 
-@interface JKAlertView()
+@interface JKAlertView() <UIWebViewDelegate>
 
 @property(strong, nonatomic) UIWindow *window;
 @property(strong, nonatomic) UIView* contentView;
@@ -25,6 +25,7 @@
 @property(strong, nonatomic) UIImageView *imageView;
 @property(strong, nonatomic) UINavigationController *navigationController;
 @property(strong, nonatomic) NSString *fontName;
+@property(strong, nonatomic) UIActivityIndicatorView *activityIndicator;
 @end
 
 
@@ -116,19 +117,25 @@
         _linkButton.hidden = YES;
         [_linkButton setTitle:self.linkText forState:UIControlStateNormal];
         [_linkButton setTitleColor:[UIColor colorWithRed:22.f/255.f green:134.f/255.f blue:255.f/255.f alpha:1.f] forState:UIControlStateNormal];
-        [_linkButton addTarget:self action:@selector(actionLink:) forControlEvents:UIControlEventTouchUpInside];
+        [_linkButton addTarget:self action:@selector(openLink:) forControlEvents:UIControlEventTouchUpInside];
         [_contentView addSubview:_linkButton];
         
     }
     return self;
 }
 
-
--(void)actionLink:(UIButton*) sender
+#pragma  mark - Action Methods
+-(void)openLink:(UIButton*) sender
 {
     UIWebView *webView = [[UIWebView alloc] initWithFrame:self.frame];
+    webView.delegate = self;
     NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:self.url]];
     [webView loadRequest:request];
+    
+    _activityIndicator = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
+    _activityIndicator.center = webView.center;
+    [_activityIndicator startAnimating];
+    [webView addSubview:_activityIndicator];
     
     UIBarButtonItem *buttonDone =  [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(dissmissWebView:)];
     
@@ -158,6 +165,13 @@
     [_navigationController dismissViewControllerAnimated:YES completion:nil];
 }
 
+#pragma mark - WebView Delegate Methods
+-(void)webViewDidFinishLoad:(UIWebView *)webView
+{
+    [_activityIndicator stopAnimating];
+}
+
+#pragma mark - Gesture Methods
 -(void)tapGesture:(UITapGestureRecognizer*)gesture
 {
     [UIView animateWithDuration:0.3/1.5 delay:0 options: UIViewAnimationOptionCurveLinear animations:^{
@@ -210,6 +224,8 @@
     }
 }
 
+#pragma mark - Animation Methods
+
 -(void)animateAlphaBackground
 {
     [UIView animateWithDuration:0.2f/1.5 animations:^{
@@ -221,6 +237,8 @@
         }
     }];
 }
+
+#pragma mark - Show Method
 
 -(void)show
 {
