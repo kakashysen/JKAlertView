@@ -8,7 +8,6 @@
 
 #import "JKAlertView.h"
 
-
 #define FONT_SIZE_TITLE 18.f
 #define FONT_SIZE_DETAIL 14.f
 #define FONT_SIZE_LINK_BUTTON 16.f
@@ -24,7 +23,8 @@
 @property(strong, nonatomic) UILabel *footerLabel;
 @property(strong, nonatomic) UILabel *detailLabel;
 @property(strong, nonatomic) UIImageView *imageView;
-
+@property(strong, nonatomic) UINavigationController *navigationController;
+@property(strong, nonatomic) NSString *fontName;
 @end
 
 
@@ -42,6 +42,8 @@
         {
             _window = [[UIApplication sharedApplication].windows objectAtIndex:0];
         }
+        
+        _fontName = fontName;
         
         //Configure main view
         self.frame = _window.frame;
@@ -76,6 +78,8 @@
         _titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(0,_imageView.frame.size.height + 10, _contentView.frame.size.width, 20)];
         _titleLabel.font = [UIFont fontWithName:fontName size:FONT_SIZE_TITLE];
         _titleLabel.textAlignment = NSTextAlignmentCenter;
+        _titleLabel.contentScaleFactor = 0.3;
+        _titleLabel.adjustsFontSizeToFitWidth = YES;
         _titleLabel.text = self.titleText;
         [_contentView addSubview:_titleLabel];
         
@@ -94,6 +98,8 @@
         _footerLabel.font = [UIFont fontWithName:fontName size:FONT_SIZE_FOOTER];
         _footerLabel.hidden = YES;
         _footerLabel.textAlignment = NSTextAlignmentCenter;
+        _footerLabel.contentScaleFactor = 0.5f;
+        _footerLabel.adjustsFontSizeToFitWidth = YES;
         _footerLabel.text = self.footerText;
         [_contentView addSubview:_footerLabel];
         
@@ -120,12 +126,36 @@
 
 -(void)actionLink:(UIButton*) sender
 {
-    //    UIWebView *webView = [[UIWebView alloc] initWithFrame:self.frame];
-    //    NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:self.url]];
-    //    [webView loadRequest:request];
-    //    [self addSubview:webView];
+    UIWebView *webView = [[UIWebView alloc] initWithFrame:self.frame];
+    NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:self.url]];
+    [webView loadRequest:request];
     
-    [[UIApplication sharedApplication] openURL:[NSURL URLWithString:self.url]];
+    UIBarButtonItem *buttonDone =  [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(dissmissWebView:)];
+    
+    UIViewController *webViewController = [[UIViewController alloc] init];
+    webViewController.view = webView;
+    webViewController.title = _titleText;
+    webViewController.navigationItem.rightBarButtonItem = buttonDone;
+    
+    CGRect frame = CGRectMake(0, 0, self.frame.size.width, 44);
+    UILabel *titleWebView = [[UILabel alloc] initWithFrame:frame];
+    titleWebView.backgroundColor = [UIColor clearColor];
+    titleWebView.font = [UIFont fontWithName:_fontName size:16.f];
+    titleWebView.textAlignment = NSTextAlignmentCenter;
+    titleWebView.textColor = [UIColor blackColor];
+    titleWebView.contentScaleFactor = 0.3f;
+    titleWebView.adjustsFontSizeToFitWidth = YES;
+    titleWebView.text = _titleText;
+    [titleWebView sizeToFit];
+    webViewController.navigationItem.titleView = titleWebView;
+    
+    _navigationController = [[UINavigationController alloc] initWithRootViewController:webViewController];
+    [[UIApplication sharedApplication].keyWindow.rootViewController presentViewController:_navigationController animated:YES completion:nil];
+}
+
+-(void)dissmissWebView:(UIBarButtonItem*) sender
+{
+    [_navigationController dismissViewControllerAnimated:YES completion:nil];
 }
 
 -(void)tapGesture:(UITapGestureRecognizer*)gesture

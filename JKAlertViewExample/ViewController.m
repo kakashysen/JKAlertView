@@ -23,13 +23,13 @@
 
 - (IBAction)showAlertAction:(id)sender
 {
-    JKAlertView *alertView = [[JKAlertView alloc] initWithFontName:@"verdana"];
+    JKAlertView *alertView = [[JKAlertView alloc] initWithFontName:@"courier"];
     alertView.headerImage = [UIImage imageNamed:@"bg_img.jpg"];
     alertView.url = @"https://google.com";
     alertView.linkText = @"google.com";
-    alertView.titleText = @"Diseño Grafico";
+    alertView.titleText = @"Diseño Grafico Diseño Grafico D";
     alertView.detailText = @"La definición de la profesión del diseñador gráfico es más bien reciente, en lo que se refiere a su preparación, su actividad y sus objetivos.";
-    alertView.footerText = @"Terminos y Condiciones";
+    alertView.footerText = @"Aplica Terminos y Condiciones";
     [alertView show];
 }
 - (IBAction)showCustomAlertAction:(id)sender
@@ -41,7 +41,7 @@
     alertView.linkText = @"google.com";
     alertView.titleText = @"Alerta";
     alertView.detailText = @"Hijo de Bardock y Gine, nace en el año 737 con el nombre de Kakarot / Kakarotto, existen dos versiones sobre su nacimiento y origen.";
-    alertView.footerText = @"Terminos y Condiciones";
+    alertView.footerText = @"Aplica Terminos y Condiciones";
     alertView.titleTextColor = [UIColor whiteColor];
     alertView.detailTextColor = [UIColor whiteColor];
     alertView.footerTextColor = [UIColor whiteColor];
