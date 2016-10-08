@@ -17,7 +17,7 @@ Pod::Spec.new do |s|
 
   s.name         = "JKAlertView"
   s.version      = "0.1.0"
-  s.summary      = "JKAlertView is a simple and beautiful alert view, you can use it to show remote notifications or whatever you want."
+  s.summary      = "JKAlertView is a simple and beautiful alert view"
 
   # This description is used to generate tags and improve search results.
   #   * Think: What does it do? Why did you write it? What is the focus?
@@ -25,6 +25,10 @@ Pod::Spec.new do |s|
   #   * Write the description between the DESC delimiters below.
   #   * Finally, don't worry about the indent, CocoaPods strips it!
   s.description  = <<-DESC
+                    JKAlertView is a simple and beautiful alert view, you can use it to show remote notifications or whatever you want.
+                    * Beautiful
+                    * Simple to use, like a UIAlertView
+                    * Swipe gesture to close alert
                    DESC
 
   s.homepage     = "https://github.com/kakashysen/JKAlertView"
