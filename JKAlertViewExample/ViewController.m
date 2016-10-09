@@ -25,27 +25,27 @@
 {
     JKAlertView *alertView = [[JKAlertView alloc] initWithFontName:@"courier"];
     alertView.headerImage = [UIImage imageNamed:@"bg_img.jpg"];
-    alertView.url = @"https://google.com";
-    alertView.linkText = @"google.com";
-    alertView.titleText = @"Diseño Grafico Diseño Grafico D";
-    alertView.detailText = @"La definición de la profesión del diseñador gráfico es más bien reciente, en lo que se refiere a su preparación, su actividad y sus objetivos.";
-    alertView.footerText = @"Aplica Terminos y Condiciones";
+    alertView.titleText = @"The Git";
+    alertView.detailText = @"Is a version control system that is used for software development and other version control tasks.";
+    alertView.linkText = @"git-scm";
+    alertView.url = @"https://git-scm.com/";
+    alertView.footerText = @"Wikipedia";
     [alertView show];
 }
 - (IBAction)showCustomAlertAction:(id)sender
 {
     JKAlertView *alertView = [[JKAlertView alloc] initWithFontName:@"verdana"];
     alertView.headerImage = [UIImage imageNamed:@"dbz.jpg"];
-    alertView.url = @"https://google.com";
+    alertView.url = @"https://en.wikipedia.org/wiki/Goku";
     alertView.backgroundContentColor = [UIColor orangeColor];
-    alertView.linkText = @"google.com";
-    alertView.titleText = @"Alerta";
-    alertView.detailText = @"Hijo de Bardock y Gine, nace en el año 737 con el nombre de Kakarot / Kakarotto, existen dos versiones sobre su nacimiento y origen.";
-    alertView.footerText = @"Aplica Terminos y Condiciones";
+    alertView.titleText = @"DBZ";
+    alertView.linkText = @"Son Goku";
+    alertView.detailText = @"Is a fictional character and main protagonist of the Dragon Ball manga series created by Akira Toriyama. He is based on Sun Wukong.";
+    alertView.footerText = @"Source - Wikipedia";
     alertView.titleTextColor = [UIColor whiteColor];
     alertView.detailTextColor = [UIColor whiteColor];
     alertView.footerTextColor = [UIColor whiteColor];
-    alertView.linkTextColor = [UIColor whiteColor];
+    alertView.linkTextColor = [UIColor blueColor];
     
     [alertView show];
 }
