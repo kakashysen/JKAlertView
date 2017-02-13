@@ -28,8 +28,11 @@
     alertView.titleText = @"The Git";
     alertView.detailText = @"Is a version control system that is used for software development and other version control tasks.";
     alertView.linkText = @"git-scm";
-    alertView.url = @"https://git-scm.com/";
+    alertView.url = @"itms-apps://itunes.apple.com/co/app/tappsi/id562064313?ls=1&mt=8";
     alertView.footerText = @"Wikipedia";
+    
+    [alertView.linkButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+    [alertView.linkButton setBackgroundImage:[UIImage imageNamed:@"btn_vermapa"] forState:UIControlStateNormal];
     [alertView show];
 }
 - (IBAction)showCustomAlertAction:(id)sender

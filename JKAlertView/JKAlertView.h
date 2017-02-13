@@ -22,6 +22,8 @@
 @property(strong, nonatomic) UIColor *footerTextColor;
 @property(strong, nonatomic) UIImage *headerImage;
 
+@property(strong, nonatomic) UIButton* linkButton;
+
 -(instancetype)initWithFontName:(NSString*)fontName;
 
 -(void)show;

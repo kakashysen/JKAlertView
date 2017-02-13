@@ -18,7 +18,6 @@
 @property(strong, nonatomic) UIWindow *window;
 @property(strong, nonatomic) UIView* contentView;
 @property(strong, nonatomic) UIView* bottomLine;
-@property(strong, nonatomic) UIButton* linkButton;
 @property(strong, nonatomic) UILabel *titleLabel;
 @property(strong, nonatomic) UILabel *footerLabel;
 @property(strong, nonatomic) UILabel *detailLabel;
@@ -112,7 +111,14 @@
         
         // Configure the link button
         float yLinkButtonPosition = _bottomLine.frame.origin.y - _detailLabel.frame.origin.y + _detailLabel.frame.size.height;
-        _linkButton = [[UIButton alloc] initWithFrame:CGRectMake(0,yLinkButtonPosition, _contentView.frame.size.width, 30)];
+        _linkButton = [[UIButton alloc] initWithFrame:CGRectMake(0,yLinkButtonPosition, _contentView.frame.size.width, 44)];
+    
+        NSDictionary *views = [NSDictionary dictionaryWithObjects:@[_contentView] forKeys:@[@"contentView"]];
+        NSString *format = @"|-[contentView]-|";
+        NSArray<NSLayoutConstraint*> *constraint = [NSLayoutConstraint constraintsWithVisualFormat:format options:NSLayoutFormatAlignAllLeft metrics:nil views:views];
+        
+        [NSLayoutConstraint activateConstraints:constraint];
+        
         _linkButton.titleLabel.font = [UIFont fontWithName:fontName size:FONT_SIZE_LINK_BUTTON];
         _linkButton.hidden = YES;
         [_linkButton setTitle:self.linkText forState:UIControlStateNormal];
@@ -127,6 +133,12 @@
 #pragma  mark - Action Methods
 -(void)openLink:(UIButton*) sender
 {
+    if ([self.url containsString:@"itms-apps://"])
+    {
+        [[UIApplication sharedApplication] openURL:[NSURL URLWithString:self.url]];
+        return;
+    }
+    
     UIWebView *webView = [[UIWebView alloc] initWithFrame:self.frame];
     webView.delegate = self;
     NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:self.url]];
